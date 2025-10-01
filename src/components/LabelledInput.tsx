@@ -1,6 +1,7 @@
 import type {LabelledInputProps} from "../types/Auth.types.ts";
+import {memo} from "react";
 
-function LabelledInput({label, placeholder, onChange, value, type}: LabelledInputProps) {
+const LabelledInput = memo(function LabelledInput({label, placeholder, onChange, value, type}: LabelledInputProps) {
     return (
         <div className="w-full max-w-sm mb-4">
             <label className="block mb-2 text-sm font-medium text-gray-700">
@@ -15,7 +16,7 @@ function LabelledInput({label, placeholder, onChange, value, type}: LabelledInpu
                 required
             />
         </div>
-    )
-}
+    );
+});
 
 export default LabelledInput;
