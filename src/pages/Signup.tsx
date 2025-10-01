@@ -3,10 +3,10 @@ import Auth from "../components/Auth.tsx";
 
 function Signup() {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 h-screen">
-            <Auth/>
+        <div className="grid grid-cols-1 md:grid-cols-2">
+            <Auth type={"SIGNUP"}/>
 
-            <div className="invisible md:visible">
+            <div className="hidden md:block">
                 <Quote/>
             </div>
         </div>

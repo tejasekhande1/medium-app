@@ -1,10 +1,5 @@
 import type {ChangeEvent} from "react";
 
-export enum AuthFormType {
-    SIGNIN = 'SIGNIN',
-    SIGNUP = 'SIGNUP',
-}
-
 export interface LabelledInputProps {
     label: string,
     placeholder: string,
@@ -15,6 +10,11 @@ export interface LabelledInputProps {
 
 export interface SignUpInputProps {
     name: string,
+    username: string,
+    password: string,
+}
+
+export interface SignInInputProps {
     username: string,
     password: string,
 }
