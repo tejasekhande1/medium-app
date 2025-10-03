@@ -1,9 +1,14 @@
 import {useBlog} from "../hooks/useBlog.ts";
 import {useParams} from "react-router-dom";
+import Avatar from "../components/Avatar.tsx";
 
 function Blog() {
     const { id } = useParams<{ id: string }>();
-    const {loading, blog} = useBlog(id);
+    const {loading, blog} = useBlog(Number(id));
+
+    if (loading) {
+        return <div>Loading...</div>
+    }
 
     return (
         <div className="max-w-4xl mx-auto px-4 py-8">

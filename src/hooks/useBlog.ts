@@ -15,7 +15,7 @@ export function useBlog(id: number) {
         }
 
         void fetchBlogDetails();
-    }, [])
+    }, [id])
 
     return {loading, blog};
 }
