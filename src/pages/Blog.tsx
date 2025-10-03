@@ -1,13 +1,14 @@
 import {useBlog} from "../hooks/useBlog.ts";
 import {useParams} from "react-router-dom";
 import Avatar from "../components/Avatar.tsx";
+import BlogDetailSkeleton from "../skeletons/BlogDetailSkeleton.tsx";
 
 function Blog() {
-    const { id } = useParams<{ id: string }>();
+    const {id} = useParams<{ id: string }>();
     const {loading, blog} = useBlog(Number(id));
 
     if (loading) {
-        return <div>Loading...</div>
+        return <div><BlogDetailSkeleton/></div>
     }
 
     return (
@@ -17,7 +18,7 @@ function Blog() {
             </h1>
 
             <div className="flex items-center gap-3 mb-8">
-                <Avatar />
+                <Avatar/>
                 <div>
                     <p className="text-sm font-medium text-gray-800">
                         Author ID: {blog.userId}
