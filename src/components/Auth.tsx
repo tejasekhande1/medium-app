@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import LabelledInput from "./LabelledInput.tsx";
 import { useState } from "react";
 import * as React from "react";
+import {useNavigate} from "react-router-dom";
+import {BASE_URL} from "../config/config.ts";
 
 function Auth({ type }: { type: "SIGNIN" | "SIGNUP" }) {
     const [signUpInputs, setSignUpInputs] = useState<SignUpInputProps>({
@@ -15,6 +17,8 @@ function Auth({ type }: { type: "SIGNIN" | "SIGNUP" }) {
         username: "",
         password: "",
     });
+
+    const navigate = useNavigate();
 
     const handleInputChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
         if (type === "SIGNUP") {
@@ -31,6 +35,33 @@ function Auth({ type }: { type: "SIGNIN" | "SIGNUP" }) {
     };
 
     const isSignUp = type === "SIGNUP";
+
+    const handleSubmit = async () => {
+        try {
+            const url = isSignUp ? "user/signup" : "user/login";
+            const body = isSignUp ? signUpInputs : signInInputs;
+
+            const res = await fetch(`${BASE_URL}${url}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.message || "Something went wrong");
+            }
+
+            // Industry standard: store JWT securely
+            localStorage.setItem("token", data.accessToken);
+            localStorage.setItem("user", JSON.stringify(data));
+
+            navigate("/blogs");
+        } catch (err: Error) {
+            console.error(err)
+        }
+    };
 
     return (
         <div className="h-screen flex flex-col justify-center items-center">
@@ -75,6 +106,7 @@ function Auth({ type }: { type: "SIGNIN" | "SIGNUP" }) {
             />
 
             <button type="button"
+                    onClick={handleSubmit}
                     className="
                     w-full  max-w-sm text-white bg-gray-800 hover:bg-gray-900 focus:outline-none
                     focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2
